@@ -24,9 +24,9 @@ btn3.addEventListener("click", (event) => {
 
 
 // Lắng nghe sự kiện keydown
-document.addEventListener("keydown", function (event) {
-    console.log(event);
-});
+// document.addEventListener("keydown", function (event) {
+//     console.log(event);
+// });
 
 // Lắng nghe sự kiện scroll
 const btnTop = document.getElementById("top");
@@ -44,3 +44,50 @@ btnTop.addEventListener("click", () => {
         behavior: "smooth"
     });
 })
+
+// Tim kiem user
+const inputEl = document.getElementById("input");
+const btnShowAll = document.getElementById("btn-show-all");
+const listEl = document.getElementById("list");
+
+const users = [
+    { id: 1, name: "Nguyen Van Tra" },
+    { id: 2, name: "Tran Hung Anh" },
+    { id: 3, name: "Nguyen Thu Hang" },
+    { id: 4, name: "Bui Van Hien" },
+    { id: 5, name: "Ngo Xuan Tuan" },
+    { id: 6, name: "Nguyen Minh Duy" },
+    { id: 7, name: "Truong Cong Dinh" },
+]
+
+const renderUsers = (users) => {
+    let html = "";
+    users.forEach(user => {
+        html += `<li>${user.name}</li>`;
+    })
+    listEl.innerHTML = html;
+};
+
+btnShowAll.addEventListener("click", () => {
+    renderUsers(users);
+})
+
+inputEl.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        const keyword = inputEl.value;
+        if (keyword.trim().length === 0) {
+            alert("Vui long nhap tu khoa tim kiem");
+            return;
+        }
+
+        const result = users.filter(user => user.name.toLowerCase().includes(keyword.toLowerCase()));
+
+        if (result.length === 0) {
+            listEl.innerHTML = "<li>Khong tim thay ket qua</li>";
+            return;
+        }
+        renderUsers(result);
+    }
+})
+
+renderUsers(users);
